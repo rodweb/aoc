@@ -43,10 +43,10 @@ func SumCalibrationValues(r io.Reader) (int, error) {
 		if err != nil {
 			return 0, err
 		}
-		if debug {
-			fmt.Printf("[%d] line=%s, matches=%#v, value=%d\n", i, scanner.Text(), matches, value)
-		}
 		sum += value
+		if debug {
+			fmt.Printf("[%d] line=%s, matches=%#v, value=%d, sum=%d\n", i, scanner.Text(), matches, value, sum)
+		}
 	}
 
 	return sum, nil
