@@ -42,14 +42,48 @@ func IsPossible(game *Game, bag *Bag) bool {
 
 func SumPossibleGames(r io.Reader, bag *Bag) int {
 	sum := 0
-	scanner := bufio.NewScanner(r)
-	for scanner.Scan() {
-		game := ParseGame(scanner.Text())
+	for _, game := range GetGames(r) {
 		if IsPossible(&game, bag) {
 			sum += game.num
 		}
 	}
 	return sum
+}
+
+func SumPowerMinSet(r io.Reader) int {
+	sum := 0
+	for _, game := range GetGames(r) {
+		minSet := MinSet(&game)
+		power := minSet.red * minSet.green * minSet.blue
+		sum += power
+	}
+	return sum
+}
+
+func MinSet(game *Game) Set {
+	minSet := game.sets[0]
+	for _, set := range game.sets {
+		if set.red > minSet.red {
+			minSet.red = set.red
+		}
+		if set.green > minSet.green {
+			minSet.green = set.green
+		}
+		if set.blue > minSet.blue {
+			minSet.blue = set.blue
+		}
+	}
+	return minSet
+}
+
+func GetGames(r io.Reader) []Game {
+	games := []Game{}
+	scanner := bufio.NewScanner(r)
+	for scanner.Scan() {
+		game := ParseGame(scanner.Text())
+		games = append(games, game)
+	}
+	return games
 }
 
 func ParseColor(s string) Color {

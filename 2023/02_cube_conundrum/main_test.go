@@ -67,9 +67,9 @@ func TestIsPossible(t *testing.T) {
 	})
 }
 
-func TestFirstExample(t *testing.T) {
+func TestFirstPart(t *testing.T) {
 	bag := &Bag{red: 12, green: 13, blue: 14}
-	t.Run("Works with first example", func(t *testing.T) {
+	t.Run("Example works for first part", func(t *testing.T) {
 		got := SumPossibleGames(fromFile("example_01.txt"), bag)
 		want := 8
 
@@ -79,11 +79,33 @@ func TestFirstExample(t *testing.T) {
 	})
 }
 
-func TestInput(t *testing.T) {
+func TestSecondPart(t *testing.T) {
+	t.Run("Example works for second part", func(t *testing.T) {
+		got := SumPowerMinSet(fromFile("example_01.txt"))
+		want := 2286
+
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
+	})
+}
+
+func TestInputFirstPart(t *testing.T) {
 	bag := &Bag{red: 12, green: 13, blue: 14}
-	t.Run("Works with input file", func(t *testing.T) {
+	t.Run("Input works for first part", func(t *testing.T) {
 		got := SumPossibleGames(fromFile("input.txt"), bag)
 		want := 2447
+
+		if got != want {
+			t.Errorf("got %d want %d", got, want)
+		}
+	})
+}
+
+func TestInputSecondPart(t *testing.T) {
+	t.Run("Input works for second part", func(t *testing.T) {
+		got := SumPowerMinSet(fromFile("input.txt"))
+		want := 56322
 
 		if got != want {
 			t.Errorf("got %d want %d", got, want)
