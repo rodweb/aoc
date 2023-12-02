@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-func TestExample(t *testing.T) {
-	t.Run("Works with provided example", func(t *testing.T) {
-		test(t, "example.txt", 142)
+func TestFirstExample(t *testing.T) {
+	t.Run("Works with first example", func(t *testing.T) {
+		test(t, "first_example.txt", 142)
 	})
 }
 
