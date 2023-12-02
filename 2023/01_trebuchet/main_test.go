@@ -12,9 +12,15 @@ func TestFirstExample(t *testing.T) {
 	})
 }
 
-func TestFirstPart(t *testing.T) {
-	t.Run("Works with first part", func(t *testing.T) {
-		test(t, "input.txt", 54304)
+func TestSecondExample(t *testing.T) {
+	t.Run("Works with second example", func(t *testing.T) {
+		test(t, "second_example.txt", 281)
+	})
+}
+
+func TestInput(t *testing.T) {
+	t.Run("Works with input file", func(t *testing.T) {
+		test(t, "input.txt", 54412)
 	})
 }
 

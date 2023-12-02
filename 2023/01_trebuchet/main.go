@@ -10,6 +10,8 @@ import (
 	"strconv"
 )
 
+const debug = false
+
 func main() {
 	file, err := os.Open("input.txt")
 	if err != nil {
@@ -25,32 +27,50 @@ func main() {
 }
 
 func SumCalibrationValues(r io.Reader) (int, error) {
-	var values []int
-	re := regexp.MustCompile(`(\d)`)
+	re := regexp.MustCompile(`(\d|one|two|three|four|five|six|seven|eight|nine)`)
 	scanner := bufio.NewScanner(r)
+	var i, sum = 0, 0
 	for scanner.Scan() {
+		i++
 		matches := re.FindAllString(scanner.Text(), -1)
+		var first, last string
 		switch len(matches) {
 		case 0:
 			return 0, errors.New("no matches found")
 		case 1:
-			value, err := strconv.Atoi(matches[0] + matches[0])
-			if err != nil {
-				return 0, err
-			}
-			values = append(values, value)
+			first, last = matches[0], matches[0]
 		default:
-			value, err := strconv.Atoi(matches[0] + matches[len(matches)-1])
-			if err != nil {
-				return 0, err
-			}
-			values = append(values, value)
+			first, last = matches[0], matches[len(matches)-1]
 		}
-	}
 
-	sum := 0
-	for _, value := range values {
+		value, err := strconv.Atoi(getStringValue(first) + getStringValue(last))
+		if err != nil {
+			return 0, err
+		}
+		if debug {
+			fmt.Printf("[%d] line=%s, matches=%#v, value=%d\n\n", i, scanner.Text(), matches, value)
+		}
 		sum += value
 	}
+
 	return sum, nil
+}
+
+func getStringValue(s string) string {
+	nums := map[string]int{
+		"one":   1,
+		"two":   2,
+		"three": 3,
+		"four":  4,
+		"five":  5,
+		"six":   6,
+		"seven": 7,
+		"eight": 8,
+		"nine":  9,
+	}
+
+	if num, ok := nums[s]; ok {
+		return strconv.Itoa(num)
+	}
+	return s
 }
