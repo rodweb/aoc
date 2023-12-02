@@ -32,7 +32,9 @@ func SumCalibrationValues(r io.Reader) (int, error) {
 	var i, sum = 0, 0
 	for scanner.Scan() {
 		i++
-		matches := re.FindAllString(scanner.Text(), -1)
+		// Replace "one" with "o1e", "three" with "t3e" and so on
+		replaced := re.ReplaceAllStringFunc(scanner.Text(), getReplacement)
+		matches := re.FindAllString(replaced, -1)
 		if len(matches) == 0 {
 			return 0, errors.New("no matches found")
 		}
@@ -50,6 +52,24 @@ func SumCalibrationValues(r io.Reader) (int, error) {
 	}
 
 	return sum, nil
+}
+
+func getReplacement(s string) string {
+	replacements := map[string]string{
+		"one":   "o1e",
+		"two":   "t2o",
+		"three": "t3e",
+		"four":  "f4r",
+		"five":  "f5e",
+		"six":   "s6x",
+		"seven": "s7n",
+		"eight": "e8t",
+		"nine":  "n9e",
+	}
+	if replacement, ok := replacements[s]; ok {
+		return replacement
+	}
+	return s
 }
 
 func getStringValue(s string) string {

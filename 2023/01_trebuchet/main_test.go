@@ -41,7 +41,7 @@ func TestOverlapped(t *testing.T) {
 
 func TestInput(t *testing.T) {
 	t.Run("Works with input file", func(t *testing.T) {
-		test(t, fromFile("input.txt"), 54412)
+		test(t, fromFile("input.txt"), 54418)
 	})
 }
 
