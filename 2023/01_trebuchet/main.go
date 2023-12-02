@@ -33,22 +33,18 @@ func SumCalibrationValues(r io.Reader) (int, error) {
 	for scanner.Scan() {
 		i++
 		matches := re.FindAllString(scanner.Text(), -1)
-		var first, last string
-		switch len(matches) {
-		case 0:
+		if len(matches) == 0 {
 			return 0, errors.New("no matches found")
-		case 1:
-			first, last = matches[0], matches[0]
-		default:
-			first, last = matches[0], matches[len(matches)-1]
 		}
+
+		first, last := matches[0], matches[len(matches)-1]
 
 		value, err := strconv.Atoi(getStringValue(first) + getStringValue(last))
 		if err != nil {
 			return 0, err
 		}
 		if debug {
-			fmt.Printf("[%d] line=%s, matches=%#v, value=%d\n\n", i, scanner.Text(), matches, value)
+			fmt.Printf("[%d] line=%s, matches=%#v, value=%d\n", i, scanner.Text(), matches, value)
 		}
 		sum += value
 	}
